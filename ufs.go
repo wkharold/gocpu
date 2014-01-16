@@ -40,7 +40,7 @@ func toError(err error) *p.Error {
 		ecode = p.EIO
 	}
 
-	return &p.Error{ename, ecode}
+	return &p.Error{ename, uint32(ecode)}
 }
 
 // IsBlock reports if the file is a block device
@@ -587,7 +587,6 @@ func runufs() {
 	ufs.Id = "ufs"
 	ufs.Debuglevel = *debug
 	ufs.Start(ufs)
-	srv.StartStatsServer()
 	err := ufs.StartNetListener("tcp", *addr)
 	if err != nil {
 		log.Println(err)
