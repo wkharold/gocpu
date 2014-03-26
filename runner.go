@@ -28,7 +28,7 @@ func runner() {
 
 	res := C.openpty(&am, &as, nil, nil, nil)
 	if res < 0 {
-		log.Fatal("openpty %v\n", res)
+		log.Fatalf("openpty %v\n", res)
 	}
 
 	amaster := os.NewFile(uintptr(am), "/dev/ptmx")
@@ -39,7 +39,7 @@ func runner() {
 
 	info := strings.Split(string(line), ":")
 	if len(info) != 2 {
-		log.Fatal("Bad mount info '%v'\n", line)
+		log.Fatalf("Bad mount info '%v'\n", line)
 	}
 	err = syscall.Mount(info[0], "/mnt/term/", "9p", 0xc0ed0000, "port="+info[1])
 	if err != nil {
